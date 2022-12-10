@@ -22,6 +22,7 @@ jobs:
         tags: buildroot:pulsar
   build-iso:
     runs-on: ubuntu-latest
+    needs: docker-build
     container:
       image: buildroot:pulsar
       volumes:
