@@ -40,8 +40,8 @@ jobs:
     container:
       image: ghcr.io/ciiiii/buildroot-pulsar:latest
       volumes:
-      - $PWD/dist:/build
-      - $PWD/buildroot-v86/:/buildroot-v86
+      - ${GITHUB_WORKSPACE}/dist:/build
+      - ${GITHUB_WORKSPACE}/buildroot-v86/:/buildroot-v86
     steps:
     - name: Check the iso
       run: ls -lh dist/v86-linux.iso
