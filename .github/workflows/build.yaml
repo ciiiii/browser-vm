@@ -9,6 +9,9 @@ on:
 jobs:
   docker-build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
@@ -16,17 +19,26 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
+    - name: Log in to the Container registry
+      uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Build Docker Image
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: ciiiii/buildroot:pulsar
+        tags: |
+          ghcr.io/ciiiii/buildroot-pulsar:latest
+          ghcr.io/ciiiii/buildroot-pulsar:${{ github.sha }}
 
   build-iso:
     runs-on: ubuntu-latest
     needs: docker-build
     container:
-      image: ciiiii/buildroot:pulsar
+      image: ghcr.io/ciiiii/buildroot-pulsar:latest
       volumes:
       - $PWD/dist:/build
       - $PWD/buildroot-v86/:/buildroot-v86
