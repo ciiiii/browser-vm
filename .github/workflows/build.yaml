@@ -30,8 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: false
-        tags: |
-          buildroot
+        tags: buildroot
           # ghcr.io/ciiiii/buildroot-pulsar:latest
           # ghcr.io/ciiiii/buildroot-pulsar:${{ github.sha }}
     
