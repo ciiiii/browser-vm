@@ -1,0 +1,38 @@
+name: build
+
+on:
+  push:
+    branch:
+      - "master"
+
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build Docker Image
+      uses: docker/build-push-action@v3
+      with:
+        tags: buildroot:pulsar
+  build-iso:
+    runs-on: ubuntu-latest
+    container:
+      image: buildroot:pulsar
+      volumes:
+      - $PWD/dist:/build
+      - $PWD/buildroot-v86/:/buildroot-v86
+    steps:
+    - name: Check the iso
+      run: ls -lh dist/v86-linux.iso
+    
+    - name: Archive the iso
+      uses: actions/upload-artifact@v3
+      with:
+        name: buildroot-v86
+        path: dist/v86-linux.iso
