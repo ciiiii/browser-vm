@@ -36,11 +36,12 @@ jobs:
     
     - name: Run Docker Image
       run: |
+        echo $PWD
         docker run \
           --rm \
           --name build-v86 \
-          -v ${GITHUB_WORKSPACE}/dist:/build \
-          -v ${GITHUB_WORKSPACE}/buildroot-v86/:/buildroot-v86 \
+          -v $PWD/dist:/build \
+          -v $PWD/buildroot-v86/:/buildroot-v86 \
           ghcr.io/ciiiii/buildroot-pulsar:latest
 
     - name: Check the iso
