@@ -19,30 +19,31 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Log in to the Container registry
-      uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Log in to the Container registry
+    #   uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+    #   with:
+    #     registry: ghcr.io
+    #     username: ${{ github.actor }}
+    #     password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build Docker Image
       uses: docker/build-push-action@v3
       with:
-        push: true
+        push: false
         tags: |
-          ghcr.io/ciiiii/buildroot-pulsar:latest
-          ghcr.io/ciiiii/buildroot-pulsar:${{ github.sha }}
+          buildroot
+          # ghcr.io/ciiiii/buildroot-pulsar:latest
+          # ghcr.io/ciiiii/buildroot-pulsar:${{ github.sha }}
+    
+    - name: Run Docker Image
+      run: |
+        docker run \
+          --rm \
+          --name build-v86 \
+          -v ${GITHUB_WORKSPACE}/dist:/build \
+          -v ${GITHUB_WORKSPACE}/buildroot-v86/:/buildroot-v86 \
+          buildroot
 
-  build-iso:
-    runs-on: ubuntu-latest
-    needs: docker-build
-    container:
-      image: ghcr.io/ciiiii/buildroot-pulsar:latest
-      volumes:
-      - ${GITHUB_WORKSPACE}/dist:/build
-      - ${GITHUB_WORKSPACE}/buildroot-v86/:/buildroot-v86
-    steps:
     - name: Check the iso
       run: ls -lh dist/v86-linux.iso
     
@@ -51,3 +52,22 @@ jobs:
       with:
         name: buildroot-v86
         path: dist/v86-linux.iso
+
+
+  # build-iso:
+  #   runs-on: ubuntu-latest
+  #   needs: docker-build
+  #   container:
+  #     image: ghcr.io/ciiiii/buildroot-pulsar:latest
+  #     volumes:
+  #     - ${GITHUB_WORKSPACE}/dist:/build
+  #     - ${GITHUB_WORKSPACE}/buildroot-v86/:/buildroot-v86
+  #   steps:
+  #   - name: Check the iso
+  #     run: ls -lh dist/v86-linux.iso
+    
+  #   - name: Archive the iso
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: buildroot-v86
+  #       path: dist/v86-linux.iso
