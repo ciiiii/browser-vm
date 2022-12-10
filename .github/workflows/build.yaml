@@ -37,6 +37,9 @@ jobs:
     - name: Run Docker Image
       run: |
         echo $PWD
+        ls $PWD
+        ls $PWD/buildroot-v86
+        ls -lh $PWD/buildroot-v86/build-v86.sh
         docker run \
           --rm \
           --name build-v86 \
