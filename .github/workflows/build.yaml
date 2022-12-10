@@ -16,22 +16,17 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Version
-      id: vars
-      # run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-
     - name: Build Docker Image
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: ciiiii/buildroot:pulsar-${{ steps.Version.outputs.sha_short }}
+        tags: ciiiii/buildroot:pulsar
 
   build-iso:
     runs-on: ubuntu-latest
     needs: docker-build
     container:
-      image: ciiiii/buildroot:pulsar-${{ jobs.docker-build.steps.Version.outputs.sha_short }}
+      image: ciiiii/buildroot:pulsar
       volumes:
       - $PWD/dist:/build
       - $PWD/buildroot-v86/:/buildroot-v86
