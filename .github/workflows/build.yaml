@@ -38,17 +38,14 @@ jobs:
     
     - name: Download Pulsar
       run: |
+        wget -O apache-pulsar-2.10.2-bin.tar.gz https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=pulsar/pulsar-2.10.2/apache-pulsar-2.10.2-bin.tar.gz
+        ls -lh 
         mkdir buildroot-v86/board/v86/rootfs_overlay/pulsar
         chmod g+w buildroot-v86/board/v86/rootfs_overlay/pulsar
-        wget -O apache-pulsar-2.10.2-bin.tar.gz https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=pulsar/pulsar-2.10.2/apache-pulsar-2.10.2-bin.tar.gz
         tar -xzvf apache-pulsar-2.10.2-bin.tar.gz -C buildroot-v86/board/v86/rootfs_overlay/pulsar
 
     - name: Run Docker Image
       run: |
-        echo $PWD
-        ls -lh $PWD
-        ls -lh ..
-        ls -lh $PWD/buildroot-v86/build-v86.sh
         docker run \
           --rm \
           --name build-v86 \
