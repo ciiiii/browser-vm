@@ -42,6 +42,7 @@ jobs:
         mkdir buildroot-v86/board/v86/rootfs_overlay/pulsar
         chmod g+w buildroot-v86/board/v86/rootfs_overlay/pulsar
         tar -xzvf apache-pulsar-2.10.2-bin.tar.gz -C buildroot-v86/board/v86/rootfs_overlay/pulsar    
+        mv apache-pulsar-2.10.2 buildroot-v86/board/v86/rootfs_overlay/pulsar
 
     - name: Run Docker Image
       run: |
