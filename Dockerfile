@@ -35,18 +35,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     libssl-dev \
     rsync; \
     wget -c http://buildroot.org/downloads/buildroot-${BUILD_ROOT_RELEASE}.tar.gz; \
-    tar axf buildroot-${BUILD_ROOT_RELEASE}.tar.gz; \
-    # pulsar dependencies
-    apt-get -y install --no-install-recommends openjdk-11-jdk-headless netcat dnsutils less procps iputils-ping \
-    python3 python3-kazoo python3-pip \
-    curl ca-certificates \
-    && apt-get -y --purge autoremove \
-    && apt-get autoclean \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN mkdir /pulsar && chmod g+w /pulsar
-COPY --from=apachepulsar/pulsar:2.10.2 /pulsar /pulsar
+    tar axf buildroot-${BUILD_ROOT_RELEASE}.tar.gz;
 
 # configure the locales
 ENV LANG='C' \
