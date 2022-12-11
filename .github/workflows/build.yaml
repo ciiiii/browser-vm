@@ -44,6 +44,8 @@ jobs:
         tar -xzvf apache-pulsar-2.10.2-bin.tar.gz
         mv apache-pulsar-2.10.2 buildroot-v86/board/v86/rootfs_overlay/pulsar
 
+    # make invisible-mirror.net fail fast
+    # ref: https://github.com/actions/runner-images/issues/2577#issuecomment-845126269
     - name: Run Docker Image
       run: |
         docker run \
@@ -51,6 +53,7 @@ jobs:
           --name build-v86 \
           -v $PWD/dist:/build \
           -v $PWD/buildroot-v86/:/buildroot-v86 \
+          --add-host=invisible-mirror.net:1.1.1.1 \
           ghcr.io/ciiiii/buildroot-pulsar:latest
 
     - name: Check the iso
