@@ -36,6 +36,13 @@ jobs:
           # ghcr.io/ciiiii/buildroot-pulsar:latest
           # ghcr.io/ciiiii/buildroot-pulsar:${{ github.sha }}
     
+    - name: Download Pulsar
+      run: |
+        mkdir buildroot-v86/board/v86/rootfs_overlay/pulsar
+        chmod g+w buildroot-v86/board/v86/rootfs_overlay/pulsar
+        wget -O apache-pulsar-2.10.2-bin.tar.gz https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=pulsar/pulsar-2.10.2/apache-pulsar-2.10.2-bin.tar.gz
+        tar -xzvf apache-pulsar-2.10.2-bin.tar.gz -C buildroot-v86/board/v86/rootfs_overlay/pulsar
+
     - name: Run Docker Image
       run: |
         echo $PWD
