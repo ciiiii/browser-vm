@@ -44,6 +44,13 @@ jobs:
         chmod g+w buildroot-v86/board/v86/rootfs_overlay/pulsar
         tar -xzvf apache-pulsar-2.10.2-bin.tar.gz -C buildroot-v86/board/v86/rootfs_overlay/pulsar
 
+    - name: Extract Pulsar
+      uses: a7ul/tar-action@v1.1.0
+      with:
+        command: xzvf
+        file: apache-pulsar-2.10.2-bin.tar.gz
+        cwd: buildroot-v86/board/v86/rootfs_overlay/pulsar
+
     - name: Run Docker Image
       run: |
         docker run \
