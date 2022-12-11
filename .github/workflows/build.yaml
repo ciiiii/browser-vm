@@ -46,7 +46,7 @@ jobs:
     - name: Extract Pulsar
       uses: a7ul/tar-action@v1.1.0
       with:
-        command: xzvf
+        command: x
         files: apache-pulsar-2.10.2-bin.tar.gz
         cwd: buildroot-v86/board/v86/rootfs_overlay/pulsar
 
