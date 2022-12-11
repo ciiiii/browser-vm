@@ -15,3 +15,10 @@ tar czvf /build/licenses.tar.gz \
     ${BASE_DIR}/legal-info/host-licenses \
     ${BASE_DIR}/legal-info/licenses
 echo "Created licenses.tar.gz"
+
+# Download pulsar
+mkdir /pulsar
+chmod g+w /pulsar
+wget -O apache-pulsar-2.10.2-bin.tar.gz "https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=pulsar/pulsar-2.10.2/apache-pulsar-2.10.2-bin.tar.gz"
+tar -xzvf apache-pulsar-2.10.2-bin.tar.gz
+mv apache-pulsar-2.10.2 /pulsar
